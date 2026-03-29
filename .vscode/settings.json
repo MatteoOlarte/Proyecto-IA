@@ -1,0 +1,27 @@
+{
+	// Source - https://stackoverflow.com/a/57319062
+	// Posted by tbejos, modified by community. See post 'Timeline' for change history
+	// Retrieved 2026-03-28, License - CC BY-SA 4.0
+
+	"C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: WebKit, ColumnLimit: 100 }",
+	"C_Cpp.clang_format_style": "WebKit",
+	"cSpell.words": ["Wumpus"],
+	"cSpell.allowCompoundWords": true,
+	"cSpell.language": "en-US,es-ES",
+	"cSpell.languageSettings": [
+		{
+			"languageId": "*",
+			"caseSensitive": false
+		},
+		{
+			"languageId": "markdown",
+			"caseSensitive": true
+		}
+	],
+	"editor.formatOnSave": true,
+	"editor.wordWrap": "off",
+	"[markdown]": {
+		"editor.wordWrap": "off"
+	},
+	"editor.tabSize": 4
+}

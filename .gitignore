@@ -1,0 +1,8 @@
+dist/**
+bin/**
+build/**
+
+*.exe
+
+.vscode/**
+!.vscode/settings.json
