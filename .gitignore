@@ -3,6 +3,13 @@ bin/**
 build/**
 
 *.exe
+*.dll
+*.so
 
 .vscode/**
 !.vscode/settings.json
+
+# External dependencies
+node_modules/**
+vendor/**
+lib/**

@@ -18,7 +18,7 @@
 			"caseSensitive": true
 		}
 	],
-	"editor.formatOnSave": true,
+	"editor.formatOnSave": false,
 	"editor.wordWrap": "off",
 	"[markdown]": {
 		"editor.wordWrap": "off"
