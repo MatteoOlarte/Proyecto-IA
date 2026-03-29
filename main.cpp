@@ -15,10 +15,12 @@ void WriteLine(int numero);
 void WriteLine(char caracter);
 
 int RandomInteger();
-void PlacePlayer(int world[10][10]);
-void PlaceEntity(int world[10][10], int value);
-void AddPerceptions(int world[10][10], int row, int col, int value);
-string Tr(const int value);
+void PlacePlayer(int world[10][10][4]);
+void PlaceEntity(int world[10][10][4], int value);
+void AddPerception(int world[10][10][4], int row, int col, int perception);
+
+string TrEntity(const int value);
+string TrFeeling(const int feeling0, const int feeling1, const int feeling2);
 
 const int PLAYER = 1;
 
@@ -33,9 +35,9 @@ const int SCREAM = 1000;
 
 int main()
 {   
-    srand(static_cast<unsigned>(time(nullptr)));
+    // srand(static_cast<unsigned>(time(nullptr)));
 
-    int world[10][10] = { 0 };
+    int world[10][10][4] = { { {0} } };
 
     char input = ' ';
 
@@ -58,35 +60,36 @@ int main()
 
         for (int i = 0; i < 10; ++i) {
             for (int j = 0; j < 10; ++j) {
-                const int value = world[i][j];
-                Write("[");
-                Write(Tr(value));
-                Write("] ");
+                int entity = world[i][j][0];   
+                int feeling0 = world[i][j][1];
+                int feeling1 = world[i][j][2];
+                int feeling2 = world[i][j][3];
+                
+                if (entity != 0) {
+                    Write("[");
+                    Write(TrEntity(entity));
+                    Write("]");
+                } 
+                else if (feeling0 != 0 || feeling1 != 0 || feeling2 != 0) {
+                    Write("[");
+                    Write(TrFeeling(feeling0, feeling1, feeling2));
+                    Write("]");
+                }
+                else {
+                    Write("[⬛]");
+                }
+                
             }
-
             WriteLine();
         }
 
-        for (int i = 0; i < 10; ++i) {
-            for (int j = 0; j < 10; ++j) {
-                const int value = world[i][j];
-                Write("[");
-                Write(value);
-                Write("] ");
-            }
-
-            WriteLine();
-        }
-        
 
         WriteLine();
-        Write("Agente en: fila ");
-        Write(9);
-        Write(", columna ");
-        WriteLine(0);
+        Write("Agent at: row 9, column 0");
+        WriteLine();
 
         WriteLine();
-        Write("Ingrese comando (W/A/S/D/Q): ");
+        Write("Enter command (W/A/S/D/Q): ");
 
         std::cin >> input;
         input = toupper(input);
@@ -113,73 +116,78 @@ int main()
     return 0;
 }
 
-string Tr(const int value)
+string TrEntity(const int value)
 {
     switch (value)
     {
-    case PLAYER:
-        return "🐧";
-    case WUMPUS:
-        return "👾";
-    case PIT:
-        return "🕳️ ";
-    case GOLD:
-        return "🪙 ";
-    case STENCH:
-        return "🤢";
-    case BREEZE:
-        return "💀";
-    case GLITTER:
-        return "🪙 ";
-    case GLITTER + GOLD:
-        return "🪙 ";
-    case SCREAM:
-        return "⬛";
-    default:
-        return "⬛";
+        case PLAYER:    return "🐧";
+        case WUMPUS:    return "👾";
+        case PIT:       return "🕳️ ";
+        case GOLD:      return "🪙 ";
+        default:        return "⬛";
     }
 }
 
-void PlacePlayer(int world[10][10])
+string TrFeeling(const int feeling0, const int feeling1, const int feeling2)
 {
-    world[9][0] = PLAYER;
+    if (feeling0 == SCREAM) {
+        return "☠️";
+    }
+
+    if (feeling1 != 0 && feeling2 != 0) {
+        return "😱";
+    }
+    else {
+        if (feeling1 == STENCH) {
+            return "🤢";
+        }
+        if (feeling2 == BREEZE) {
+            return "😨";
+        }
+    }
+
+    return "🙂";
 }
 
-void PlaceEntity(int world[10][10], int value)
+void PlacePlayer(int world[10][10][4])
+{
+    world[9][0][0] = PLAYER;
+}
+
+void PlaceEntity(int world[10][10][4], int value)
 {
     int row, col;
 
     do {
         row = RandomInteger();
         col = RandomInteger();
-    } while (
-        world[row][col] != 0 && 
-        world[row][col] != STENCH && 
-        world[row][col] != BREEZE && 
-        world[row][col] != GLITTER
-    );
+    } while (world[row][col][0] != 0);   // Only avoid other ENTITIES (layer 0)
 
-    world[row][col] = value;
+    world[row][col][0] = value;          // Place entity in layer 0
 
-    AddPerceptions(world, row, col, value);
+    // Add corresponding perceptions
+    AddPerception(world, row, col, value);
 }
 
-void AddPerceptions(int world[10][10], int row, int col, int value)
+void AddPerception(int world[10][10][4], int row, int col, int value)
 {
     if (value == WUMPUS) {
-        if (row > 0)   world[row-1][col] += STENCH;
-        if (row < 9)   world[row+1][col] += STENCH;
-        if (col > 0)   world[row][col-1] += STENCH;
-        if (col < 9)   world[row][col+1] += STENCH;
+        // Add STENCH (try to put in layers 2 or 3)
+        if (row > 0)   world[row-1][col][2] = STENCH;   // or find free slot
+        if (row < 9)   world[row+1][col][2] = STENCH;
+        if (col > 0)   world[row][col-1][2] = STENCH;
+        if (col < 9)   world[row][col+1][2] = STENCH;
     }
     else if (value == PIT) {
-        if (row > 0)   world[row-1][col] += BREEZE;
-        if (row < 9)   world[row+1][col] += BREEZE;
-        if (col > 0)   world[row][col-1] += BREEZE;
-        if (col < 9)   world[row][col+1] += BREEZE;
+        // Add BREEZE
+        if (row > 0)   world[row-1][col][3] = BREEZE;
+        if (row < 9)   world[row+1][col][3] = BREEZE;
+        if (col > 0)   world[row][col-1][3] = BREEZE;
+        if (col < 9)   world[row][col+1][3] = BREEZE;
     }
     else if (value == GOLD) {
-        world[row][col] += GLITTER;
+        // Add GLITTER (we can use layer 2 for example)
+        world[row][col][2] = GLITTER;
     }
 }
 
