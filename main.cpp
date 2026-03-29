@@ -34,7 +34,7 @@ const int SCREAM = 1000;
 int main()
 {   
     srand(static_cast<unsigned>(time(nullptr)));
-    
+
     int world[10][10] = { 0 };
 
     char input = ' ';
@@ -66,6 +66,18 @@ int main()
 
             WriteLine();
         }
+
+        for (int i = 0; i < 10; ++i) {
+            for (int j = 0; j < 10; ++j) {
+                const int value = world[i][j];
+                Write("[");
+                Write(value);
+                Write("] ");
+            }
+
+            WriteLine();
+        }
+        
 
         WriteLine();
         Write("Agente en: fila ");
