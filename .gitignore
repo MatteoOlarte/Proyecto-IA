@@ -1,13 +1,21 @@
-dist/**
 bin/**
 build/**
 
+# Compilation artifacts
 *.exe
 *.dll
 *.so
+*.o
+
+# macOS artifacts
+src/dist/macOS/**
+.DS_Store
 
 .vscode/**
 !.vscode/settings.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/tasks.json
 
 # External dependencies
 node_modules/**

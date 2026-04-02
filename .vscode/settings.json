@@ -23,5 +23,6 @@
 	"[markdown]": {
 		"editor.wordWrap": "off"
 	},
-	"editor.tabSize": 4
+	"editor.tabSize": 4,
+	"editor.detectIndentation": false
 }

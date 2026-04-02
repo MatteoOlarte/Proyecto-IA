@@ -200,7 +200,7 @@ void PlaceEntity(int value)
     do {
         row = RandomInteger();
         col = RandomInteger();
-    } while (world[row][col][1] != 0);   // Only avoid other ENTITIES (layer 1)
+    } while (world[row][col][0] != 0 || world[row][col][1] != 0);   // Only avoid other ENTITIES (layer 1 and 2)
 
     world[row][col][1] = value;          // Place entity in layer 1
 
