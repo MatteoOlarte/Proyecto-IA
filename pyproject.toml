@@ -1,0 +1,16 @@
+[project]
+name = "ai-agents"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ipykernel>=7.2.0",
+    "isort>=8.0.1",
+    "openai>=2.37.0",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.14.1",
+    "requests>=2.34.2",
+    "rich>=15.0.0",
+    "selenium>=4.44.0",
+]

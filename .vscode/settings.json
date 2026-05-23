@@ -1,0 +1,31 @@
+{
+	"cSpell.words": ["KHTML", "ollama"],
+	"editor.defaultFormatter": "ms-python.autopep8",
+	"breadcrumbs.enabled": true,
+	"breadcrumbs.filePath": "last",
+	"cSpell.allowCompoundWords": true,
+	"cSpell.caseSensitive": false,
+	"cSpell.ignorePaths": [
+		"*.code-workspace",
+		"**/DockerFile",
+		"**/requirements.txt",
+		"**/.gitignore",
+		"**/.vscode/settings.json",
+		"**/pyproject.toml"
+	],
+	"cSpell.ignoreWords": [],
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": "explicit",
+		"source.unusedImports": "never"
+	},
+	"editor.detectIndentation": false,
+	"editor.formatOnSave": true,
+	"github.copilot.enable": {
+		"*": true,
+		"plaintext": false
+	},
+	"python.analysis.typeCheckingMode": "standard",
+	"editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+	"notebook.markup.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+	"markdown.preview.fontFamily": "Menlo, Monaco, 'Courier New', monospace"
+}
